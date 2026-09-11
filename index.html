@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marta Sierra Obea</title>
+<style>
+  :root{
+    --bg:#f5f7f4; --bg-alt:#ffffff; --text:#16241a; --muted:#5c6d5e;
+    --accent:#0f8a52; --accent2:#a8721f; --line:#dfe6df; --shadow: rgba(20,30,20,0.08);
+  }
+  html[data-theme="dark"]{
+    --bg:#0a0c0a; --bg-alt:#111511; --text:#d7e8d9; --muted:#6f8a72;
+    --accent:#39ff9d; --accent2:#ffb000; --line:#1f2b21; --shadow: rgba(0,0,0,0.4);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    font-size:.96rem; line-height:1.65;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:3rem 2.2rem 5rem;}
+
+  #theme-toggle{
+    position:fixed; top:1.1rem; right:1.1rem; z-index:20; font-family:inherit; font-size:.8rem;
+    background:var(--bg-alt); color:var(--muted); border:1px solid var(--line); border-radius:4px;
+    padding:.4rem .7rem; cursor:pointer;
+  }
+
+  .card{ background:var(--bg-alt); border:1px solid var(--line); border-radius:8px; box-shadow:0 1px 3px var(--shadow); position:relative; }
+
+  .section-title{ font-size:1.05rem; font-weight:700; color:var(--accent2); margin:0 0 1.4rem; }
+  .section-title::before{ content:"> "; color:var(--muted); }
+
+  .photo-slot{
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    background:repeating-linear-gradient(135deg, transparent 0 10px, rgba(127,127,127,0.07) 10px 20px);
+    border:1px dashed var(--line); color:var(--muted); font-size:.8rem; min-height:100px; border-radius:6px;
+  }
+  .photo{ border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hero-photo img{ object-position:center 30%; }
+
+  .tag{ font-size:.72rem; padding:.1rem .5rem; border-radius:3px; border:1px solid currentColor; text-decoration:none; }
+  a.tag:hover{ text-decoration:underline; }
+  .tag.new{ color:var(--accent2); }
+  .tag.current{ color:var(--accent); }
+
+  /* header */
+  header.hero{ margin-bottom:3.2rem; }
+  .term-bar{ display:flex; gap:6px; padding:.65rem .85rem; border-bottom:1px solid var(--line); }
+  .term-bar span{ width:9px; height:9px; border-radius:50%; }
+  .term-bar span:nth-child(1){ background:#e2685a; } .term-bar span:nth-child(2){ background:#e0a640; } .term-bar span:nth-child(3){ background:#4fa876; }
+  .hero-inner{ padding:1.6rem 2rem 2rem; }
+  .hero-photo{ width:100%; aspect-ratio:2.8/1; margin-bottom:1.4rem; }
+  .hero-text{ text-align:center; }
+  .prompt-line{ font-size:.82rem; color:var(--muted); margin-bottom:.6rem; }
+  .prompt-line .p1{ color:var(--accent); } .prompt-line .p2{ color:var(--accent2); }
+  h1{ font-size:2.1rem; font-weight:800; letter-spacing:-0.01em; margin:0; }
+  .tagline{ color:var(--muted); font-size:.95rem; margin-top:.4rem; max-width:640px; margin-left:auto; margin-right:auto; }
+  .location{ color:var(--muted); font-size:.85rem; margin-top:.4rem; }
+  .contact-row{ margin-top:1rem; display:flex; justify-content:center; flex-wrap:wrap; gap:1.1rem; font-size:.88rem; }
+  .contact-row a{ color:var(--accent); text-decoration:none; }
+  .contact-row a:hover{ text-decoration:underline; }
+  .contact-row a::before{ content:"$ open "; color:var(--muted); }
+
+  section{ margin-bottom:4.2rem; }
+
+  /* ===================== academics ===================== */
+  .acad-sub{
+    font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+    margin:0 0 .9rem; padding-top:.2rem;
+  }
+  .acad-sub:not(:first-child){ margin-top:2rem; }
+
+  .edu-entry{ display:flex; gap:1.3rem; padding:1.3rem 1.5rem .8rem; margin-bottom:1.1rem; }
+  .edu-entry-main{ flex:1; min-width:0; }
+  .edu-entry-photo{ width:200px; aspect-ratio:4/3; flex-shrink:0; align-self:flex-start; }
+  .edu-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:.4rem 1rem; }
+  .edu-head h4{ margin:0; font-size:1.35rem; font-weight:800; }
+  .edu-date{ font-size:.8rem; color:var(--muted); white-space:nowrap; }
+  .edu-meta{ font-size:.85rem; color:var(--accent2); margin-top:.3rem; }
+  .edu-entry p{ font-size:.88rem; margin:.6rem 0 0; }
+
+  @media (max-width:640px){
+    .edu-entry{ flex-direction:column; }
+    .edu-entry-photo{ width:100%; }
+  }
+
+  .edu-exchange{ margin-top:1.1rem; padding-top:1rem; border-top:1px dashed var(--line); }
+  .edu-exchange-label{
+    font-size:.74rem; color:var(--accent2); text-transform:uppercase; letter-spacing:.06em;
+    display:flex; align-items:center; gap:.5rem; margin-bottom:.35rem;
+  }
+  .edu-exchange-body{ font-size:.88rem; color:var(--muted); }
+  .edu-exchange-body strong{ color:var(--text); }
+
+  .awards-row{ display:grid; grid-template-columns:1.1fr 1fr; gap:1rem; align-items:stretch; }
+  .award-card{ display:flex; flex-direction:column; overflow:hidden; }
+  .award-card .photo{ border:none; border-radius:0; aspect-ratio:16/9; }
+  .award-body{ padding:1rem 1.2rem; flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .award-body .edu-head{ margin-bottom:.15rem; }
+  .award-body h4{ margin:0; font-size:.98rem; font-weight:700; }
+  .award-body p{ font-size:.85rem; margin:.5rem 0 0; }
+  .awards-col{ display:flex; flex-direction:column; gap:1rem; }
+  .awards-col .award-card:nth-child(1){ flex:1; }
+  .awards-col .award-card:nth-child(2){ flex:1.4; }
+  .award-followup{ font-size:.74rem; color:var(--muted); margin-top:.55rem; padding-top:.5rem; border-top:1px dashed var(--line); }
+  .award-followup strong{ color:var(--text); }
+  .award-followup a{ color:inherit; text-decoration:underline; }
+
+  @media (max-width:820px){
+    .awards-row{ grid-template-columns:1fr; }
+  }
+
+  /* experience */
+  .experience-grid{ display:flex; gap:1.4rem; align-items:flex-start; }
+  .experience-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:1.4rem; }
+  .exp-card{ padding:1.2rem; display:flex; gap:1.3rem; align-items:flex-start; }
+  .exp-card.imdea{ padding:1.6rem 1.8rem; }
+  .exp-card.es-card{ width:250px; flex-shrink:0; flex-direction:column; padding:0; overflow:hidden; gap:0; }
+  .exp-card.es-card .photo{ width:100%; aspect-ratio:4/3; border:none; border-radius:0; position:relative; }
+  .es-badge{
+    position:absolute; top:.6rem; left:.6rem; padding:.15rem .5rem; border-radius:3px;
+    background:rgba(0,0,0,.55); color:#fff; font-size:.72rem; letter-spacing:.02em;
+  }
+  .exp-card.es-card .exp-body{ padding:1rem 1.2rem 1.3rem; }
+  .exp-body{ flex:1; min-width:0; }
+  .exp-card h3{ font-size:1.05rem; margin:0 0 .1rem; font-weight:700; }
+  .exp-card .org{ color:var(--accent2); font-size:.85rem; }
+  .exp-card p{ font-size:.87rem; margin:.5rem 0 0; }
+  .role-line{ display:flex; gap:.5rem; align-items:baseline; margin-top:.9rem; padding-left:.6rem; border-left:2px solid var(--line); }
+  .role-line.current{ border-left-color:var(--accent); }
+  .role-line .dot{ width:7px; height:7px; border-radius:50%; background:var(--muted); flex-shrink:0; margin-top:.4rem; }
+  .role-line.current .dot{ background:var(--accent); }
+  .role-line h4{ margin:0; font-size:.95rem; font-weight:700; }
+  .when{ font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; display:block; margin-top:.2rem; }
+  .role-line p{ margin:.3rem 0 0; font-size:.85rem; }
+  .pub-link{ display:inline-block; margin-top:.45rem; font-size:.82rem; color:var(--accent2); }
+
+  @media (max-width:760px){
+    .experience-grid{ flex-direction:column; }
+    .exp-card{ flex-direction:column; }
+    .exp-card.es-card{ width:100%; }
+  }
+
+  /* hackathons */
+  .hack-feat{ display:flex; gap:1.3rem; padding:1.2rem; margin-bottom:1.4rem; }
+  .hack-feat .photo-slot{ width:190px; aspect-ratio:4/3; flex-shrink:0; }
+  .hack-feat .photo{ width:220px; aspect-ratio:4/3; flex-shrink:0; }
+  .hack-feat-body{ flex:1; min-width:0; }
+  .hack-feat-body h3{ margin:0; font-size:1.1rem; font-weight:700; }
+  .hack-feat-body .year{ color:var(--accent2); font-size:.8rem; }
+  .hack-feat-body p{ margin:.4rem 0 0; font-size:.9rem; }
+  .hack-feat-body a.demo{
+    display:inline-block; margin-top:.55rem; font-size:.85rem; color:var(--accent);
+    border:1px solid var(--accent); border-radius:4px; padding:.25rem .8rem; text-decoration:none;
+  }
+  .hack-feat-body a.demo:hover{ background:var(--accent); color:var(--bg); }
+
+  .rugby-card{ max-width:230px; margin:0 auto; overflow:hidden; align-self:flex-end; }
+  .rugby-photo{ position:relative; border-radius:6px; overflow:hidden; }
+  .rugby-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+  .rugby-caption{ font-size:.82rem; color:var(--muted); text-align:center; line-height:1.3; margin-top:.5rem; margin-bottom:.15rem; }
+  .rugby-caption .p1{ color:var(--accent); } .rugby-caption .p2{ color:var(--accent2); }
+  .rugby-subcaption{ font-size:.74rem; color:var(--muted); text-align:center; line-height:1.3; }
+
+  .hack-row-wrap{ display:flex; align-items:center; justify-content:space-between; gap:.50rem; }
+  .hack-row-group{ display:flex; align-items:center; gap:1rem; }
+  .hack-row-label{ width:62px; flex-shrink:0; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; line-height:1.3; color:var(--muted); }
+  .hack-row-divider{ width:1px; align-self:stretch; background:var(--line); }
+  .hack-row-group.next-group{ margin-left:-.25rem; gap:.01rem; }
+  .hack-row-group.next-group .hack-row-label{ color:var(--accent2); font-weight:700; }
+  .hack-row-all{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:.9rem; }
+  .hack-item{ display:flex; flex-direction:column; align-items:center; text-align:center; width:128px; }
+  .hack-item .logo-img{ width:128px; height:128px; object-fit:contain; padding:.4rem; border:1px solid var(--line); border-radius:6px; margin-bottom:.45rem; display:block; background:var(--bg-alt); }
+  .hack-item .name{ font-size:.78rem; color:var(--muted); }
+  .hack-item.solo{ width:auto; }
+  .hackspain-photo{ height:200px; width:auto; object-fit:contain; display:block; }
+
+  @media (max-width:760px){
+    .hack-feat{ flex-direction:column; } .hack-feat .photo-slot{ width:100%; }
+  }
+
+  footer{ margin-top:3.5rem; text-align:center; color:var(--muted); font-size:.85rem; border-top:1px solid var(--line); padding-top:1.8rem; }
+  footer a{ color:var(--accent); }
+</style>
+</head>
+<body>
+<button id="theme-toggle" type="button">[ light ]</button>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="card">
+      <div class="term-bar"><span></span><span></span><span></span></div>
+      <div class="hero-inner">
+        <div class="hero-photo photo"><img src="media/Banner-Picture.webp" alt="Marta Sierra Obea"></div>
+        <div class="hero-text">
+          <div class="prompt-line"><span class="p1">marta@build</span>:<span class="p2">~</span>$ whoami</div>
+          <h1>Marta Sierra Obea</h1>
+          <div class="tagline">Tech and people enthusiast. Big fan of bringing cool ideas to life and talking about them.</div>
+          <div class="location">~/Monzón (Huesca), Spain $ cd Madrid, Spain</div>
+          <div class="contact-row">
+            <a href="mailto:martasierraobea23@gmail.com">email</a>
+            <a href="https://www.linkedin.com/in/marta-sierra-obea/" target="_blank" rel="noopener">linkedin</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="academics">
+    <h2 class="section-title">academic_background</h2>
+
+    <h3 class="acad-sub">Education</h3>
+    <div class="card edu-entry">
+      <div class="edu-entry-main">
+        <div class="edu-head"><h4>Data Science + Telecommunication Technologies Engineering</h4><span class="edu-date">2022 – 2027</span></div>
+        <div class="edu-meta">Universidad Carlos III de Madrid · Dual Degree</div>
+        <p>Ranked <strong>1st in class</strong>, GPA <strong>9.81/10.00</strong>. Honorable Mention in 31 courses.</p>
+
+        <div class="edu-exchange">
+          <div class="edu-exchange-body"><strong>Exchange year</strong></div>
+          <div class="edu-exchange-label">Nanyang Technological University <span class="tag current">Singapore</span></div>
+          <p>GPA <strong>5.00/5.00</strong>, highest distinction ('A+') in eleven out of twelve taken courses.</p>
+        </div>
+      </div>
+      <div class="rugby-card">
+        <div class="rugby-photo">
+          <img src="media/rugby.jpg" alt="Playing rugby"><span class="es-badge">#off-topic</span>
+        </div>
+        <div class="rugby-caption"><span class="p2">~</span>$ fav part of uni: rugby</div>
+        <div class="rugby-subcaption">Singapore Champions, 2024</div>
+      </div>
+    </div>
+
+    <h3 class="acad-sub">Awards</h3>
+    <div class="awards-row">
+      <div class="card award-card">
+        <div class="photo"><img src="media/wonnow.jpg" alt="WONNOW Award ceremony with Microsoft &amp; CaixaBank"></div>
+        <div class="award-body">
+          <div class="edu-head"><h4>WONNOW Award</h4><a class="tag new" href="https://news.microsoft.com/source/emea/2025/11/caixabank-y-microsoft-otorgan-los-premios-wonnow-a-las-mejores-alumnas-de-grados-stem-de-espana/?lang=es" target="_blank" rel="noopener">read the news!</a></div>
+          <div class="edu-meta">Microsoft &amp; CaixaBank · 2025</div>
+          <p>Named Top 1 STEM female student in Spain.</p>
+        </div>
+      </div>
+      <div class="awards-col">
+        <div class="card award-card">
+          <div class="award-body">
+            <h4>Excelencia 360° Scholarship</h4>
+            <div class="edu-meta">Banco Santander · 2026</div>
+            <p>Awarded to the Top 1 student at Universidad Carlos III de Madrid.</p>
+          </div>
+        </div>
+        <div class="card award-card">
+          <div class="award-body">
+            <h4>Spanish Olympiads in Informatics &amp; Mathematics</h4>
+            <div class="edu-meta">2022</div>
+            <p>National Finalist in both the XVI Informatics and LVIII Mathematics Olympiads, first gold medal in the regional informatics round.</p>
+            <div class="award-followup">→ later became a volunteer Problem Maker &amp; Tester at <a href="https://oifem.es/" target="_blank" rel="noopener">OIFem</a>, the Spanish Informatics Female Olympiad.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2 class="section-title">work_experience</h2>
+    <div class="experience-grid">
+      <div class="experience-main">
+        <div class="card exp-card">
+          <div class="exp-body">
+            <h3>QuantumBlack, AI by McKinsey</h3>
+            <div class="org">Data Scientist Intern</div>
+            <div class="when">Jun–Jul 2026 · Madrid</div>
+            <p>Applied ML to real client needs &amp; boosted my communication &amp; critical thinking skills.</p>
+          </div>
+        </div>
+        <div class="card exp-card imdea">
+          <div class="exp-body">
+            <h3>IMDEA Networks Institute</h3>
+            <div class="role-line current">
+              <span class="dot"></span>
+              <div><h4>Mobile Networks AI Researcher <span class="tag current">current</span></h4><div class="when">Sep 2025 – Present</div>
+              <p>Developing reinforcement-learning environments to train agents for 5G RAN virtualization and resource management.</p></div>
+            </div>
+            <div class="role-line">
+              <span class="dot"></span>
+              <div><h4>Quantum Communications Student Researcher</h4><div class="when">Jun–Jul 2024</div>
+              <p>Investigated quantum computing to accelerate error correction in mobile networks.</p>
+              <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3727128" target="_blank" rel="noopener">co-authored: "Quantum Computing in the RAN with Qu4Fec" — ACM SIGMETRICS 2025</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card exp-card es-card">
+        <div class="photo"><img src="media/english-summer.jpg" alt="English Summer staff team"><span class="es-badge">#off-topic</span></div>
+        <div class="exp-body">
+          <h3>English Summer S.A.</h3>
+          <div class="org">Summer Camps</div>
+          <div class="role-line current">
+            <span class="dot"></span>
+            <div><h4>Monitors' Director</h4><div class="when">2025 - Present</div></div>
+          </div>
+          <div class="role-line">
+            <span class="dot"></span>
+            <div><h4>Monitor</h4><div class="when">2022 - 2024</div></div>
+          </div>
+          <p>People skills, team leadership, and a non-negotiable amount of fun.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hackathons">
+    <h2 class="section-title">hackathons</h2>
+    <div class="card hack-feat">
+      <div class="photo"><img src="media/project-barcelona.jpg" alt="Project Barcelona Hackathon"></div>
+      <div class="hack-feat-body">
+        <h3>Project Barcelona Hackathon</h3>
+        <div class="year">April 2026 · Preply Track <span class="tag new">Winners</span></div>
+        <p>Assembled an NLP engine that converts raw class transcriptions into student progress analytics - measuring fluency, vocabulary growth, and grammar trends automatically.</p>
+        <p style="font-size:0.82rem; color:var(--muted); margin-top:0.3rem;">Built in 24 hours with Cristina & Hugo.</p>
+        <a class="demo" href="https://project-barcelona.hcenteno.com/" target="_blank" rel="noopener">watch the demo &rarr;</a>
+      </div>
+    </div>
+
+    <div class="hack-row-wrap">
+      <div class="hack-row-group">
+        <div class="hack-row-all">
+          <div class="hack-item"><img class="logo-img" src="media/techfest.jpg" alt="T3chFest logo"><div class="name">T3chFest Hackathon (2022)</div></div>
+          <div class="hack-item"><img class="logo-img" src="media/circular-innovation.jpg" alt="Hunger4Innovation logo"><div class="name">Circular Innovation Hackathon (2023)</div></div>
+          <div class="hack-item"><img class="logo-img" src="media/ada-byron.jpg" alt="Ada Byron hackathon logo"><div class="name">Ada Byron<br>(2024)</div></div>
+          <div class="hack-item"><img class="logo-img" src="media/easyA.png" alt="VeChain x EasyA hackathon logo"><div class="name">VeChain x EasyA x BCG Singapore Hackathon (2025)</div></div>
+          </div>
+      </div>
+      <div class="hack-row-divider"></div>
+      <div class="hack-row-group next-group">
+        <div class="hack-row-label">next<br>up →</div>
+        <div class="hack-item solo"><img class="hackspain-photo" src="media/acreditacion-hackspain-2026.png" alt="HackSpain accreditation"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    always up for the next hackathon ☄️☄️<br>
+    <a href="mailto:martasierraobea23@gmail.com">martasierraobea23@gmail.com</a> · <a href="https://www.linkedin.com/in/marta-sierra-obea/" target="_blank" rel="noopener">linkedin</a>
+  </footer>
+
+</div>
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('theme-toggle'), stored=null;
+    try{ stored=localStorage.getItem('theme'); }catch(e){}
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = stored || (prefersDark?'dark':'dark');
+    function apply(t){ root.setAttribute('data-theme', t); btn.textContent = t==='dark' ? '[ light ]' : '[ dark ]'; }
+    apply(theme);
+    btn.addEventListener('click', function(){ theme = theme==='dark'?'light':'dark'; apply(theme); try{localStorage.setItem('theme',theme);}catch(e){} });
+  })();
+</script>
+</body>
+</html>

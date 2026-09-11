@@ -1,0 +1,5 @@
+.DS_Store
+media/.DS_Store
+*.docx
+*.pdf
+preview-*.html
