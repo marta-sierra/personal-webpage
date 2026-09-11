@@ -352,8 +352,7 @@
   (function(){
     var root=document.documentElement, btn=document.getElementById('theme-toggle'), stored=null;
     try{ stored=localStorage.getItem('theme'); }catch(e){}
-    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var theme = stored || (prefersDark?'dark':'dark');
+    var theme = stored || 'light';
     function apply(t){ root.setAttribute('data-theme', t); btn.textContent = t==='dark' ? '[ light ]' : '[ dark ]'; }
     apply(theme);
     btn.addEventListener('click', function(){ theme = theme==='dark'?'light':'dark'; apply(theme); try{localStorage.setItem('theme',theme);}catch(e){} });
