@@ -45,6 +45,21 @@
   a.tag:hover{ text-decoration:underline; }
   .tag.new{ color:var(--accent2); }
   .tag.current{ color:var(--accent); }
+  .tag.soon{ color:var(--muted); border-radius:999px; font-style:italic; white-space:nowrap; }
+
+  /* announcement cards (Cala Comet banner, Bending Spoons) */
+  .announce{
+    display:flex; align-items:center; gap:1rem; padding:.85rem 1.2rem;
+    background:color-mix(in srgb, var(--accent2) 7%, var(--bg-alt));
+    border-color:color-mix(in srgb, var(--accent2) 35%, var(--line));
+  }
+  .announce-logo{ width:48px; height:48px; min-height:0; flex-shrink:0; font-size:.58rem; line-height:1.2; padding:.2rem; }
+  .announce-logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .announce-text{ flex:1; min-width:0; font-size:.88rem; }
+  .announce-text strong{ color:var(--text); }
+  .announce-text a{ color:inherit; text-decoration:none; }
+  .announce-text a:hover{ text-decoration:underline; }
+  .announce-banner{ margin-bottom:1.4rem; }
 
   /* header */
   header.hero{ margin-bottom:3.2rem; }
@@ -189,6 +204,14 @@
 <body>
 <button id="theme-toggle" type="button">[ light ]</button>
 <div class="wrap">
+
+  <aside class="card announce announce-banner">
+    <!-- TODO: replace placeholder with Cala Comet logo, e.g. <img src="media/cala-comet.png" alt="Cala Comet logo"> -->
+    <div class="photo-slot announce-logo">Cala Comet logo</div>
+    <div class="announce-text">
+      <strong>Cala Comet — Winter 2027 Cohort.</strong> One of 4 builders selected across Europe to represent Cala Comet at top hackathons (Jan–Mar 2027). <span class="tag soon">to be publicly announced soon</span>
+    </div>
+  </aside>
 
   <header class="hero">
     <div class="card">
