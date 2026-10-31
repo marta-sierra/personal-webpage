@@ -166,7 +166,7 @@
 
   /* hackathons */
   .hack-feat{ display:flex; gap:1.3rem; padding:1.2rem; margin-bottom:1.4rem; }
-  .hack-feat .photo-slot{ width:190px; aspect-ratio:4/3; flex-shrink:0; }
+  .hack-feat .photo-slot{ width:220px; aspect-ratio:4/3; flex-shrink:0; align-self:flex-start; }
   .hack-feat .photo{ width:220px; aspect-ratio:4/3; flex-shrink:0; }
   .hack-feat-body{ flex:1; min-width:0; }
   .hack-feat-body h3{ margin:0; font-size:1.1rem; font-weight:700; }
@@ -185,21 +185,21 @@
   .rugby-caption .p1{ color:var(--accent); } .rugby-caption .p2{ color:var(--accent2); }
   .rugby-subcaption{ font-size:.74rem; color:var(--muted); text-align:center; line-height:1.3; }
 
-  .hack-row-wrap{ display:flex; align-items:center; justify-content:space-between; gap:.50rem; }
-  .hack-row-group{ display:flex; align-items:center; gap:1rem; }
-  .hack-row-label{ width:62px; flex-shrink:0; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; line-height:1.3; color:var(--muted); }
-  .hack-row-divider{ width:1px; align-self:stretch; background:var(--line); }
-  .hack-row-group.next-group{ margin-left:-.25rem; gap:.01rem; }
-  .hack-row-group.next-group .hack-row-label{ color:var(--accent2); font-weight:700; }
-  .hack-row-all{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:.9rem; }
-  .hack-item{ display:flex; flex-direction:column; align-items:center; text-align:center; width:128px; }
-  .hack-item .logo-img{ width:128px; height:128px; object-fit:contain; padding:.4rem; border:1px solid var(--line); border-radius:6px; margin-bottom:.45rem; display:block; background:var(--bg-alt); }
-  .hack-item .name{ font-size:.78rem; color:var(--muted); }
-  .hack-item.solo{ width:auto; }
-  .hackspain-photo{ height:200px; width:auto; object-fit:contain; display:block; }
+  .hack-meta{ font-size:.82rem; color:var(--muted); }
+  .hack-feat-body p.hack-meta{ margin-top:.3rem; font-size:.82rem; }
+  .hack-meta a{ color:inherit; text-decoration:underline; }
+  .hack-meta strong{ color:var(--text); }
+
+  .past-row{ display:flex; align-items:center; gap:1.2rem; padding-top:.4rem; }
+  .past-label{ flex-shrink:0; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .past-items{ flex:1; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.8rem 1.2rem; }
+  .past-item{ display:flex; align-items:center; gap:.6rem; }
+  .past-item .logo-img{ width:44px; height:44px; flex-shrink:0; object-fit:contain; padding:.2rem; border:1px solid var(--line); border-radius:6px; display:block; background:var(--bg-alt); }
+  .past-item .name{ font-size:.78rem; color:var(--muted); line-height:1.3; max-width:150px; }
 
   @media (max-width:760px){
-    .hack-feat{ flex-direction:column; } .hack-feat .photo-slot{ width:100%; }
+    .hack-feat{ flex-direction:column; } .hack-feat .photo-slot, .hack-feat .photo{ width:100%; }
+    .past-row{ flex-direction:column; align-items:flex-start; gap:.7rem; }
   }
 
   footer{ margin-top:3.5rem; text-align:center; color:var(--muted); font-size:.85rem; border-top:1px solid var(--line); padding-top:1.8rem; }
@@ -351,6 +351,18 @@
   <section id="hackathons">
     <h2 class="section-title">hackathons</h2>
     <div class="card hack-feat">
+      <!-- TODO: replace placeholder with HackSpain photo, e.g. <div class="photo"><img src="media/hackspain-2026.jpg" alt="HackSpain 2026"></div> -->
+      <div class="photo-slot">[ HackSpain 2026 photo ]</div>
+      <div class="hack-feat-body">
+        <h3>🥇 HackSpain 2026 — Winner, Prosper AI Track</h3>
+        <div class="year">Madrid · Sept 18–20, 2026</div>
+        <p>Built an autonomous voice agent that runs a medical clinic's appointment system end to end. It handles messy real-world calls (background noise, interruptions, patients changing their minds mid-call, a secondary insurance mentioned only when asked) in 5 languages. It goes beyond answering: it detects which upcoming visits or follow-ups each patient needs and proactively calls them, adapting its personality to each caller. A companion dashboard gives the clinic real-time traceability, configuration and analytics.</p>
+        <p class="hack-meta"><em>Team of 5 · 48 hours · 77k lines of Python</em> · built with <a href="https://www.linkedin.com/in/cristina-caballero-rivas/" target="_blank" rel="noopener">Cristina</a>, <a href="https://www.linkedin.com/in/francisco-jimeno-fernandez/" target="_blank" rel="noopener">Francisco</a>, <a href="https://www.linkedin.com/in/ricardomendezcavalieri/" target="_blank" rel="noopener">Ricardo</a> &amp; <a href="https://www.linkedin.com/in/joaquin-ferreiros/" target="_blank" rel="noopener">Joaquin</a>.</p>
+        <p class="hack-meta"><strong>Stack:</strong> Pipecat real-time voice pipeline · Soniox STT · ElevenLabs multilingual TTS · LLM with automatic model fallback · FastAPI + WebSockets · Supabase/Postgres · Langfuse tracing &amp; evals · React + Vite dashboard · Docker</p>
+      </div>
+    </div>
+
+    <div class="card hack-feat">
       <div class="photo"><img src="media/project-barcelona.jpg" alt="Project Barcelona Hackathon"></div>
       <div class="hack-feat-body">
         <h3>Project Barcelona Hackathon</h3>
@@ -361,19 +373,13 @@
       </div>
     </div>
 
-    <div class="hack-row-wrap">
-      <div class="hack-row-group">
-        <div class="hack-row-all">
-          <div class="hack-item"><img class="logo-img" src="media/techfest.jpg" alt="T3chFest logo"><div class="name">T3chFest Hackathon (2022)</div></div>
-          <div class="hack-item"><img class="logo-img" src="media/circular-innovation.jpg" alt="Hunger4Innovation logo"><div class="name">Circular Innovation Hackathon (2023)</div></div>
-          <div class="hack-item"><img class="logo-img" src="media/ada-byron.jpg" alt="Ada Byron hackathon logo"><div class="name">Ada Byron<br>(2024)</div></div>
-          <div class="hack-item"><img class="logo-img" src="media/easyA.png" alt="VeChain x EasyA hackathon logo"><div class="name">VeChain x EasyA x BCG Singapore Hackathon (2025)</div></div>
-          </div>
-      </div>
-      <div class="hack-row-divider"></div>
-      <div class="hack-row-group next-group">
-        <div class="hack-row-label">next<br>up →</div>
-        <div class="hack-item solo"><img class="hackspain-photo" src="media/acreditacion-hackspain-2026.png" alt="HackSpain accreditation"></div>
+    <div class="past-row">
+      <div class="past-label">Previously at</div>
+      <div class="past-items">
+        <div class="past-item"><img class="logo-img" src="media/easyA.png" alt="VeChain x EasyA hackathon logo"><div class="name">VeChain x EasyA x BCG Singapore Hackathon (2025)</div></div>
+        <div class="past-item"><img class="logo-img" src="media/ada-byron.jpg" alt="Ada Byron hackathon logo"><div class="name">Ada Byron (2024)</div></div>
+        <div class="past-item"><img class="logo-img" src="media/circular-innovation.jpg" alt="Hunger4Innovation logo"><div class="name">Circular Innovation Hackathon (2023)</div></div>
+        <div class="past-item"><img class="logo-img" src="media/techfest.jpg" alt="T3chFest logo"><div class="name">T3chFest Hackathon (2022)</div></div>
       </div>
     </div>
   </section>
