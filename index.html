@@ -102,13 +102,18 @@
     .edu-entry-photo{ width:100%; }
   }
 
-  .edu-exchange{ margin-top:1.1rem; padding-top:1rem; border-top:1px dashed var(--line); }
+  .edu-desc{ color:var(--muted); }
+  .edu-exchange{
+    margin-top:1.1rem; padding:.85rem 1.1rem; border-radius:6px;
+    background:color-mix(in srgb, var(--accent) 7%, var(--bg-alt));
+    border:1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  }
+  .edu-exchange .edu-head h5{ margin:0; font-size:.98rem; font-weight:700; }
+  .edu-exchange p{ margin-top:.35rem; }
   .edu-exchange-label{
     font-size:.74rem; color:var(--accent2); text-transform:uppercase; letter-spacing:.06em;
     display:flex; align-items:center; gap:.5rem; margin-bottom:.35rem;
   }
-  .edu-exchange-body{ font-size:.88rem; color:var(--muted); }
-  .edu-exchange-body strong{ color:var(--text); }
 
   .awards-row{ display:grid; grid-template-columns:1.1fr 1fr; gap:1rem; align-items:stretch; }
   .award-card{ display:flex; flex-direction:column; overflow:hidden; }
@@ -238,14 +243,15 @@
     <h3 class="acad-sub">Education</h3>
     <div class="card edu-entry">
       <div class="edu-entry-main">
-        <div class="edu-head"><h4>Data Science + Telecommunications Engineering</h4></div>
-        <div><span class="edu-date">2022 – 2027</span></div>
+        <div class="edu-head"><h4>Data Science + Electrical Engineering (Telecommunications)</h4></div>
+        <div><span class="edu-date">2022 – Expected June 2027</span></div>
         <div class="edu-meta">Universidad Carlos III de Madrid · Dual Degree</div>
-        <p>Ranked <strong>1st in class</strong>, GPA <strong>9.81/10.00</strong>. Honorable Mention in 31 courses.</p>
+        <p>Ranked <strong>1st in class</strong>, GPA <strong>9.81/10.00</strong>. Highest Distinction (<em>Matrícula de Honor</em>, awarded to the top student in the class) in 31 courses.</p>
+        <p class="edu-desc">Officially <em>Telecommunication Technologies Engineering</em>, an Electrical Engineering specialization focused on communications, signal processing and networks.</p>
 
         <div class="edu-exchange">
-          <div class="edu-exchange-body"><strong>Exchange year</strong></div>
-          <div class="edu-exchange-label">Nanyang Technological University <span class="tag current">Singapore</span></div>
+          <div class="edu-head"><h5>Exchange Year — Electrical and Electronic Engineering</h5><span class="edu-date">2024 – 2025</span></div>
+          <div class="edu-exchange-label">Nanyang Technological University (NTU) <span class="tag current">Singapore</span></div>
           <p>GPA <strong>5.00/5.00</strong>, highest distinction ('A+') in eleven out of twelve taken courses.</p>
         </div>
       </div>
