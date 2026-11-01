@@ -20,6 +20,7 @@
     font-size:.96rem; line-height:1.65;
   }
   .wrap{max-width:1120px; margin:0 auto; padding:3rem 2.2rem 5rem;}
+  img{ max-width:100%; }
 
   #theme-toggle{
     position:fixed; top:1.1rem; right:1.1rem; z-index:20; font-family:inherit; font-size:.8rem;
@@ -40,26 +41,28 @@
   .photo{ border:1px solid var(--line); border-radius:6px; overflow:hidden; }
   .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
   .hero-photo img{ object-position:center 30%; }
+  .zoom-hackspain img{ transform:scale(1.35); transform-origin:center 62%; }
 
   .tag{ font-size:.72rem; padding:.1rem .5rem; border-radius:3px; border:1px solid currentColor; text-decoration:none; }
   a.tag:hover{ text-decoration:underline; }
   .tag.new{ color:var(--accent2); }
   .tag.current{ color:var(--accent); }
+  .tag.win{ color:var(--bg); background:var(--accent2); border-color:var(--accent2); font-weight:700; white-space:nowrap; margin-left:.3rem; }
   .tag.soon{ color:var(--muted); border-radius:999px; font-style:italic; white-space:nowrap; }
 
-  /* announcement cards (Cala Comet banner, Bending Spoons) */
+  /* announcement card (Bending Spoons) */
   .announce{
     display:flex; align-items:center; gap:1rem; padding:.85rem 1.2rem;
     background:color-mix(in srgb, var(--accent2) 7%, var(--bg-alt));
     border-color:color-mix(in srgb, var(--accent2) 35%, var(--line));
   }
-  .announce-logo{ width:48px; height:48px; min-height:0; flex-shrink:0; font-size:.58rem; line-height:1.2; padding:.2rem; }
+  .announce-logo{ width:48px; height:48px; flex-shrink:0; padding:.35rem; display:block; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); }
   .announce-logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+  html[data-theme="dark"] .announce-logo img{ filter:invert(1); }
   .announce-text{ flex:1; min-width:0; font-size:.88rem; }
   .announce-text strong{ color:var(--text); }
   .announce-text a{ color:inherit; text-decoration:none; }
   .announce-text a:hover{ text-decoration:underline; }
-  .announce-banner{ margin-bottom:1.4rem; }
 
   /* header */
   header.hero{ margin-bottom:3.2rem; }
@@ -72,47 +75,68 @@
   .prompt-line{ font-size:.82rem; color:var(--muted); margin-bottom:.6rem; }
   .prompt-line .p1{ color:var(--accent); } .prompt-line .p2{ color:var(--accent2); }
   h1{ font-size:2.1rem; font-weight:800; letter-spacing:-0.01em; margin:0; }
-  .tagline{ color:var(--muted); font-size:.95rem; margin-top:.4rem; max-width:640px; margin-left:auto; margin-right:auto; }
   .location{ color:var(--muted); font-size:.85rem; margin-top:.4rem; }
   .contact-row{ margin-top:1rem; display:flex; justify-content:center; flex-wrap:wrap; gap:1.1rem; font-size:.88rem; }
   .contact-row a{ color:var(--accent); text-decoration:none; }
   .contact-row a:hover{ text-decoration:underline; }
   .contact-row a::before{ content:"$ open "; color:var(--muted); }
 
+  /* cohort line + info popover */
+  .cohort{ position:relative; display:inline-block; margin-top:.45rem; font-size:.92rem; color:var(--accent2); }
+  .info-btn{
+    font-family:inherit; font-size:.95rem; line-height:1; color:var(--accent); background:none;
+    border:1px solid transparent; border-radius:4px; padding:.2rem .35rem; margin-left:.15rem; cursor:pointer; vertical-align:baseline;
+  }
+  .info-btn:hover, .info-btn[aria-expanded="true"]{ border-color:var(--line); background:var(--bg); }
+  .info-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  /* narrow screens: panel opens in the flow and pushes content down; wide screens: beside the line, to the right */
+  .info-panel{
+    margin:.6rem auto 0; width:min(400px, 100%); text-align:left; font-size:.8rem; line-height:1.55; color:var(--text);
+    background:var(--bg-alt); border:1px solid color-mix(in srgb, var(--accent2) 45%, var(--line)); border-radius:6px;
+    padding:.6rem 1rem .8rem; box-shadow:0 6px 18px var(--shadow);
+  }
+  .info-panel[hidden]{ display:none; }
+  .info-head{ display:flex; justify-content:space-between; align-items:center; color:var(--muted); margin-bottom:.35rem; }
+  .info-close{
+    font-family:inherit; font-size:.8rem; color:var(--muted); background:none; border:1px solid transparent;
+    border-radius:4px; padding:.1rem .35rem; cursor:pointer; line-height:1.2;
+  }
+  .info-close:hover{ color:var(--accent); border-color:var(--line); }
+  .info-close:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .info-panel a{ color:var(--accent); }
+  @media (min-width:900px){
+    .info-panel{ position:absolute; z-index:15; left:calc(100% + .8rem); top:50%; transform:translateY(-50%); margin:0; width:320px; }
+  }
+
   section{ margin-bottom:4.2rem; }
 
-  /* ===================== academics ===================== */
-  .acad-sub{
-    font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
-    margin:0 0 .9rem; padding-top:.2rem;
-  }
-  .acad-sub:not(:first-child){ margin-top:2rem; }
+  /* currently building (full-width card at top of work experience) */
+  .build-card{ display:block; margin-bottom:1.4rem; }
+  .build-card h3{ margin:0; font-size:1.05rem; font-weight:700; display:flex; flex-wrap:wrap; align-items:center; gap:.4rem .7rem; color:var(--text); }
+  .build-card p{ margin:.35rem 0 0; }
+  .build-card p.hack-meta{ margin-top:.25rem; }
 
-  .edu-entry{ display:flex; gap:1.3rem; padding:1.3rem 1.5rem .8rem; margin-bottom:1.1rem; }
+  .cala-logo{ width:18px; height:18px; border-radius:4px; vertical-align:-3px; margin-right:.4rem; }
+
+  /* ===================== education ===================== */
+  .edu-entry{ display:flex; gap:1.3rem; padding:1.2rem 1.5rem; align-items: flex-start;}
   .edu-entry-main{ flex:1; min-width:0; }
-  .edu-entry-photo{ width:200px; aspect-ratio:4/3; flex-shrink:0; align-self:flex-start; }
   .edu-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:.4rem 1rem; }
-  .edu-head h4{ margin:0; font-size:1.35rem; font-weight:800; }
+  .edu-head h4{ margin:0; font-size:1.15rem; font-weight:800; }
   .edu-date{ font-size:.8rem; color:var(--muted); white-space:nowrap; }
   .edu-meta{ font-size:.85rem; color:var(--accent2); margin-top:.3rem; }
-  .edu-entry p{ font-size:.88rem; margin:.6rem 0 0; }
+  .edu-entry p{ font-size:.88rem; margin:.5rem 0 0; }
 
-  @media (max-width:640px){
-    .edu-entry{ flex-direction:column; }
-    .edu-entry-photo{ width:100%; }
-  }
-
-  .edu-desc{ color:var(--muted); }
   .edu-exchange{
-    margin-top:1.1rem; padding:.85rem 1.1rem; border-radius:6px;
+    margin-top:.9rem; padding:.7rem 1rem; border-radius:6px;
     background:color-mix(in srgb, var(--accent) 7%, var(--bg-alt));
     border:1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
   }
-  .edu-exchange .edu-head h5{ margin:0; font-size:.98rem; font-weight:700; }
-  .edu-exchange p{ margin-top:.35rem; }
-  .edu-exchange-label{
-    font-size:.74rem; color:var(--accent2); text-transform:uppercase; letter-spacing:.06em;
-    display:flex; align-items:center; gap:.5rem; margin-bottom:.35rem;
+  .edu-exchange .edu-head h5{ margin:0; font-size:.95rem; font-weight:700; }
+  .edu-entry .edu-exchange p{ margin-top:.25rem; }
+
+  @media (max-width:640px){
+    .edu-entry{ flex-direction:column; }
   }
 
   .awards-row{ display:grid; grid-template-columns:1.1fr 1fr; gap:1rem; align-items:stretch; }
@@ -172,18 +196,40 @@
   .hack-feat-body h3{ margin:0; font-size:1.1rem; font-weight:700; }
   .hack-feat-body .year{ color:var(--accent2); font-size:.8rem; }
   .hack-feat-body p{ margin:.4rem 0 0; font-size:.9rem; }
+  /* demo video thumbnail (right column) */
+  .demo-col{ width:300px; flex-shrink:0; align-self:flex-start; }
+  .demo-thumb{ display:block; color:inherit; text-decoration:none; }
+  .demo-frame{
+    position:relative; aspect-ratio:16/9; border-radius:6px; overflow:hidden; border:1px solid var(--line);
+    background:#14171a; display:flex; align-items:center; justify-content:center;
+  }
+  .demo-frame img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .demo-frame .ph{ position:absolute; bottom:.5rem; left:0; right:0; text-align:center; font-size:.7rem; color:#9aa3ab; }
+  .demo-play{
+    position:relative; z-index:1; width:54px; height:54px; border-radius:50%; background:rgba(0,0,0,.6);
+    border:2px solid #fff; display:flex; align-items:center; justify-content:center; transition:transform .15s, background .15s;
+  }
+  .demo-play::before{ content:""; margin-left:4px; border-style:solid; border-width:10px 0 10px 16px; border-color:transparent transparent transparent #fff; }
+  .demo-thumb:hover .demo-play{ transform:scale(1.08); background:var(--accent); }
+  .demo-links{ display:flex; justify-content:center; align-items:center; gap:1.1rem; margin-top:.5rem; font-size:.82rem; }
+  .demo-label{ color:var(--accent); text-decoration:none; }
+  .demo-label:hover{ text-decoration:underline; }
+  .gh-link{ display:inline-flex; align-items:center; gap:.35rem; color:var(--text); text-decoration:none; }
+  .gh-link svg{ display:block; }
+  .gh-link:hover{ color:var(--accent); }
+  .gh-link:hover span{ text-decoration:underline; }
+
   .hack-feat-body a.demo{
     display:inline-block; margin-top:.55rem; font-size:.85rem; color:var(--accent);
     border:1px solid var(--accent); border-radius:4px; padding:.25rem .8rem; text-decoration:none;
   }
   .hack-feat-body a.demo:hover{ background:var(--accent); color:var(--bg); }
 
-  .rugby-card{ max-width:230px; margin:0 auto; overflow:hidden; align-self:center; }
+  .rugby-card{ max-width:230px; margin:0 auto; overflow:hidden; align-self:center; margin-top: 0; padding-top: 0;}
   .rugby-photo{ position:relative; border-radius:6px; overflow:hidden; }
   .rugby-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
   .rugby-caption{ font-size:.82rem; color:var(--muted); text-align:center; line-height:1.3; margin-top:.5rem; margin-bottom:.15rem; }
   .rugby-caption .p1{ color:var(--accent); } .rugby-caption .p2{ color:var(--accent2); }
-  .rugby-subcaption{ font-size:.74rem; color:var(--muted); text-align:center; line-height:1.3; }
 
   .hack-meta{ font-size:.82rem; color:var(--muted); }
   .hack-feat-body p.hack-meta{ margin-top:.3rem; font-size:.82rem; }
@@ -193,14 +239,45 @@
   .past-row{ display:flex; align-items:center; gap:1.2rem; padding-top:.4rem; }
   .past-label{ flex-shrink:0; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
   .past-items{ flex:1; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.8rem 1.2rem; }
-  .past-item{ display:flex; align-items:center; gap:.6rem; }
+  .past-item{ display:flex; align-items:center; gap:.6rem; color:inherit; text-decoration:none; }
+  a.past-item:hover .name{ color:var(--accent); text-decoration:underline; }
   .past-item .logo-img{ width:44px; height:44px; flex-shrink:0; object-fit:contain; padding:.2rem; border:1px solid var(--line); border-radius:6px; display:block; background:var(--bg-alt); }
   .past-item .name{ font-size:.78rem; color:var(--muted); line-height:1.3; max-width:150px; }
 
+  @media (max-width:1000px) and (min-width:761px){
+    .hack-feat{ flex-wrap:wrap; } .demo-col{ width:100%; max-width:420px; margin-left:calc(220px + 1.3rem); }
+  }
   @media (max-width:760px){
-    .hack-feat{ flex-direction:column; } .hack-feat .photo-slot, .hack-feat .photo{ width:100%; }
+    .hack-feat{ flex-direction:column; } .hack-feat .photo-slot, .hack-feat .photo, .demo-col{ width:100%; }
     .past-row{ flex-direction:column; align-items:flex-start; gap:.7rem; }
   }
+
+  @media (max-width:480px){
+    .wrap{ padding:3.4rem 1rem 3rem; }
+    .hero-inner{ padding:1.2rem 1rem 1.4rem; }
+    h1{ font-size:1.65rem; }
+    .cohort{ font-size:.84rem; }
+    section{ margin-bottom:3rem; }
+    .build-card, .edu-entry, .exp-card.imdea{ padding:1rem; }
+    .hack-feat{ padding:1rem; }
+    .announce{ padding:.8rem; gap:.8rem; }
+    .rugby-card{ max-width:100%; }
+    .past-item .name{ max-width:none; }
+  }
+
+  /* highlighter: draws in once when scrolled into view, then stays static */
+  mark.hl{
+    color:var(--text); background-color:transparent; font-weight:700; padding:0 .15em; border-radius:2px;
+    -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    background-image:linear-gradient(color-mix(in srgb, var(--accent2) 26%, transparent), color-mix(in srgb, var(--accent2) 26%, transparent));
+    background-repeat:no-repeat; background-size:0% 100%;
+    transition:background-size 1.1s cubic-bezier(.6,.05,.3,1) .25s;
+  }
+  html[data-theme="dark"] mark.hl{
+    background-image:linear-gradient(color-mix(in srgb, var(--accent2) 30%, transparent), color-mix(in srgb, var(--accent2) 30%, transparent));
+  }
+  mark.hl.on{ background-size:100% 100%; }
+  @media (prefers-reduced-motion:reduce){ mark.hl{ transition:none; } }
 
   footer{ margin-top:3.5rem; text-align:center; color:var(--muted); font-size:.85rem; border-top:1px solid var(--line); padding-top:1.8rem; }
   footer a{ color:var(--accent); }
@@ -210,14 +287,6 @@
 <button id="theme-toggle" type="button">[ light ]</button>
 <div class="wrap">
 
-  <aside class="card announce announce-banner">
-    <!-- TODO: replace placeholder with Cala Comet logo, e.g. <img src="media/cala-comet.png" alt="Cala Comet logo"> -->
-    <div class="photo-slot announce-logo">Cala Comet logo</div>
-    <div class="announce-text">
-      <strong>Cala Comet — Winter 2027 Cohort.</strong> One of 4 builders selected across Europe to represent Cala Comet at top hackathons (Jan–Mar 2027). <span class="tag soon">to be publicly announced soon</span>
-    </div>
-  </aside>
-
   <header class="hero">
     <div class="card">
       <div class="term-bar"><span></span><span></span><span></span></div>
@@ -226,7 +295,13 @@
         <div class="hero-text">
           <div class="prompt-line"><span class="p1">marta@build</span>:<span class="p2">~</span>$ whoami</div>
           <h1>Marta Sierra Obea</h1>
-          <div class="tagline">Tech and people enthusiast. Big fan of bringing cool ideas to life and talking about them.</div>
+          <div class="cohort">
+            <img class="cala-logo" src="media/cala_ai_logo.jpeg" alt="Cala logo">Cala Comet Winter 2027 Builder · 1 of 4 across Europe<button class="info-btn" id="cohort-btn" type="button" aria-expanded="false" aria-controls="cohort-info" aria-label="About the Cala Comet cohort">ⓘ</button>
+            <div class="info-panel" id="cohort-info" role="region" aria-label="About the Cala Comet cohort" hidden>
+              <div class="info-head"><span>$ cat cohort.txt</span><button class="info-close" id="cohort-close" type="button" aria-label="Close">[x]</button></div>
+              Cala Comet sponsors 4 of Europe's top builders to attend 3 top hackathons in 3 months. This cohort, January to March 2027, hasn't been publicly announced yet. If you're reading this and need verification, contact me and I'll provide it. See the <a href="https://lnkd.in/p/ei63ayqp" target="_blank" rel="noopener">previous cohort's announcement</a>.
+            </div>
+          </div>
           <div class="location">~/Monzón (Huesca), Spain $ cd Madrid, Spain</div>
           <div class="contact-row">
             <a href="mailto:martasierraobea23@gmail.com">email</a>
@@ -237,38 +312,12 @@
     </div>
   </header>
 
-  <section id="academics">
-    <h2 class="section-title">academic_background</h2>
-
-    <h3 class="acad-sub">Education</h3>
-    <div class="card edu-entry">
-      <div class="edu-entry-main">
-        <div class="edu-head"><h4>Data Science + Electrical Engineering (Telecommunications)</h4></div>
-        <div><span class="edu-date">2022 – Expected June 2027</span></div>
-        <div class="edu-meta">Universidad Carlos III de Madrid · Dual Degree</div>
-        <p>Ranked <strong>1st in class</strong>, GPA <strong>9.81/10.00</strong>. Highest Distinction (<em>Matrícula de Honor</em>, awarded to the top student in the class) in 31 courses.</p>
-        <p class="edu-desc">Officially <em>Telecommunication Technologies Engineering</em>, an Electrical Engineering specialization focused on communications, signal processing and networks.</p>
-
-        <div class="edu-exchange">
-          <div class="edu-head"><h5>Exchange Year — Electrical and Electronic Engineering</h5><span class="edu-date">2024 – 2025</span></div>
-          <div class="edu-exchange-label">Nanyang Technological University (NTU) <span class="tag current">Singapore</span></div>
-          <p>GPA <strong>5.00/5.00</strong>, highest distinction ('A+') in 11 of 12 courses.</p>
-        </div>
-      </div>
-      <div class="rugby-card">
-        <div class="rugby-photo">
-          <img src="media/rugby.jpg" alt="Playing rugby"><span class="es-badge">#off-topic</span>
-        </div>
-        <div class="rugby-caption"><span class="p2">~</span>$ fav part of uni: rugby</div>
-      </div>
-    </div>
-
-    <h3 class="acad-sub">Awards</h3>
+  <section id="awards">
+    <h2 class="section-title">awards</h2>
     <div class="card announce" style="margin-bottom:1rem;">
-      <!-- TODO: replace placeholder with Bending Spoons logo, e.g. <a href="https://fellowship.bendingspoons.com" target="_blank" rel="noopener"><img src="media/bending-spoons.png" alt="Bending Spoons logo"></a> -->
-      <div class="photo-slot announce-logo">Bending Spoons logo</div>
+      <a class="announce-logo" href="https://fellowship.bendingspoons.com" target="_blank" rel="noopener"><img src="media/bending-spoons.png" alt="Bending Spoons logo"></a>
       <div class="announce-text">
-        <strong><a href="https://fellowship.bendingspoons.com" target="_blank" rel="noopener">Bending Spoons Fellowship</a> — Inaugural Cohort.</strong> Selected among the top 10 Computer Science students in Europe. <span class="tag soon">to be publicly announced soon</span>
+        <strong><a href="https://fellowship.bendingspoons.com" target="_blank" rel="noopener">Bending Spoons Fellowship</a>.</strong> Selected among the <mark class="hl">top 10 Computer Science students in Europe</mark>. <span class="tag soon">to be publicly announced soon</span>
       </div>
     </div>
     <div class="awards-row">
@@ -277,7 +326,7 @@
         <div class="award-body">
           <div class="edu-head"><h4>WONNOW Award</h4><a class="tag new" href="https://news.microsoft.com/source/emea/2025/11/caixabank-y-microsoft-otorgan-los-premios-wonnow-a-las-mejores-alumnas-de-grados-stem-de-espana/?lang=es" target="_blank" rel="noopener">read the news!</a></div>
           <div class="edu-meta">Microsoft &amp; CaixaBank · 2025</div>
-          <p>Named the #1 female STEM student in Spain.</p>
+          <p>Named the <mark class="hl">top female STEM student in Spain</mark>.</p>
         </div>
       </div>
       <div class="awards-col">
@@ -285,7 +334,7 @@
           <div class="award-body">
             <h4>Excelencia 360° Scholarship</h4>
             <div class="edu-meta">Banco Santander · 2026</div>
-            <p>Awarded to the #1-ranked student at Universidad Carlos III de Madrid.</p>
+            <p>Awarded to the top-ranked student at Universidad Carlos III de Madrid.</p>
           </div>
         </div>
         <div class="card award-card">
@@ -300,8 +349,69 @@
     </div>
   </section>
 
+  <section id="hackathons">
+    <h2 class="section-title">hackathons</h2>
+    <div class="card hack-feat">
+      <div class="photo zoom-hackspain"><img src="media/hackspain.JPG" alt="HackSpain 2026 winning team in Madrid"></div>
+      <div class="hack-feat-body">
+        <h3>HackSpain 2026 (Madrid)</h3>
+        <div class="year">Sept 2026 · Prosper AI Track <span class="tag win">🏆 Winners</span></div>
+        <p>Built an autonomous voice agent that runs a medical clinic's appointments. It handles messy real-world calls (noise, interruptions, patients changing their minds) and proactively calls patients due for visits.</p>
+        <p class="hack-meta"><em>Built in 48 hours</em> with <a href="https://www.linkedin.com/in/cristina-caballero-rivas/" target="_blank" rel="noopener">Cristina</a>, <a href="https://www.linkedin.com/in/francisco-jimeno-fernandez/" target="_blank" rel="noopener">Fran</a>, <a href="https://www.linkedin.com/in/ricardomendezcavalieri/" target="_blank" rel="noopener">Ric</a> &amp; <a href="https://www.linkedin.com/in/joaquin-ferreiros/" target="_blank" rel="noopener">Joaquin</a>.</p>
+      </div>
+      <div class="demo-col">
+        <a class="demo-thumb" href="https://youtu.be/1qrWvk4LVIQ" target="_blank" rel="noopener" aria-label="Watch the HackSpain 2026 demo video">
+          <span class="demo-frame"><span class="demo-play"></span><span class="ph">[ demo thumbnail coming soon ]</span></span>
+        </a>
+        <div class="demo-links">
+          <a class="gh-link" href="https://github.com/jferreiros/vortex" target="_blank" rel="noopener" aria-label="HackSpain 2026 code on GitHub" title="Code on GitHub"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>code</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card hack-feat">
+      <!-- TODO: optionally swap the photo for a demo GIF, e.g. <div class="photo"><img src="media/project-europe-2026.gif" alt="Project Europe 2026 demo"></div> -->
+      <div class="photo"><img src="media/project-barcelona.jpg" alt="Project Europe 2026 hackathon in Barcelona"></div>
+      <div class="hack-feat-body">
+        <h3>Project Europe 2026 (Barcelona)</h3>
+        <div class="year">Apr 2026 · Preply Track <span class="tag win">🏆 Winners</span></div>
+        <p>Assembled an NLP engine that converts raw class transcriptions into student progress analytics - measuring fluency, vocabulary growth, and grammar trends automatically.</p>
+        <p class="hack-meta"><em>Built in 24 hours</em> with <a href="https://www.linkedin.com/in/cristina-caballero-rivas/" target="_blank" rel="noopener">Cristina</a> &amp; Hugo.</p>
+      </div>
+      <!-- TODO: add the thumbnail: <img src="media/project-europe-demo-thumb.jpg" alt=""> inside .demo-frame (then delete the .ph span) -->
+      <div class="demo-col">
+        <a class="demo-thumb" href="https://youtu.be/6ZqDSOONAcM" target="_blank" rel="noopener" aria-label="Watch the Project Europe 2026 demo">
+          <span class="demo-frame"><span class="demo-play"></span><span class="ph">[ demo thumbnail coming soon ]</span></span>
+        </a>
+        <div class="demo-links">
+          <a class="gh-link" href="https://github.com/centenohugo/Project-Barcelona" target="_blank" rel="noopener" aria-label="Project Europe 2026 code on GitHub" title="Code on GitHub"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>code</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="past-row">
+      <div class="past-label">Previously at</div>
+      <div class="past-items">
+        <!-- TODO: replace each #TODO with a project link; optional image/GIF slot per item, e.g. <img class="logo-img" src="media/vechain-2025.gif" alt="..."> -->
+        <!-- <img class="logo-img" src="media/vechain-2025.gif" alt="VeChain x EasyA x BCG project demo"> -->
+        <a class="past-item" href="#TODO"><img class="logo-img" src="media/easyA.png" alt="VeChain x EasyA hackathon logo"><span class="name">VeChain x EasyA x BCG Singapore Hackathon (2025)</span></a>
+        <!-- <img class="logo-img" src="media/ada-byron-2024.gif" alt="Ada Byron project demo"> -->
+        <a class="past-item" href="#TODO"><img class="logo-img" src="media/ada-byron.jpg" alt="Ada Byron hackathon logo"><span class="name">Ada Byron (2024)</span></a>
+        <!-- <img class="logo-img" src="media/circular-innovation-2023.gif" alt="Circular Innovation project demo"> -->
+        <a class="past-item" href="#TODO"><img class="logo-img" src="media/circular-innovation.jpg" alt="Circular Innovation Hackathon logo"><span class="name">Circular Innovation Hackathon (2023)</span></a>
+        <!-- <img class="logo-img" src="media/t3chfest-2022.gif" alt="T3chFest project demo"> -->
+        <a class="past-item" href="#TODO"><img class="logo-img" src="media/techfest.jpg" alt="T3chFest logo"><span class="name">T3chFest Hackathon (2022)</span></a>
+      </div>
+    </div>
+  </section>
+
   <section id="experience">
     <h2 class="section-title">work_experience</h2>
+    <div class="card announce build-card" id="building">
+      <h3>Next Hop <span class="tag current">currently building</span></h3>
+      <p class="announce-text">A platform that plans your trips using fresh, verified data to create personalized, hour-by-hour schedules.</p>
+      <p class="hack-meta">Co-founder · In private alpha, public beta early 2027.</p>
+    </div>
     <div class="experience-grid">
       <div class="experience-main">
         <div class="card exp-card">
@@ -309,7 +419,7 @@
             <h3>McKinsey &amp; Company — QuantumBlack, AI by McKinsey</h3>
             <div class="org">Data Scientist Intern</div>
             <div class="when">Jun–Jul 2026 · Madrid</div>
-            <p>Applied ML to real client needs &amp; boosted my communication &amp; critical thinking skills.</p>
+            <p>Built ML models for leading logistics clients (details confidential). Received return offer.</p>
           </div>
         </div>
         <div class="card exp-card imdea">
@@ -324,7 +434,7 @@
               <span class="dot"></span>
               <div><h4>Quantum Communications Student Researcher</h4><div class="when">Jun–Jul 2024</div>
               <p>Investigated quantum computing to accelerate error correction in mobile networks.</p>
-              <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3727128" target="_blank" rel="noopener">co-authored: "Quantum Computing in the RAN with Qu4Fec" — ACM SIGMETRICS 2025</a></div>
+              <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3727128" target="_blank" rel="noopener">second author of "Quantum Computing in the RAN with Qu4Fec" — ACM SIGMETRICS 2025</a></div>
             </div>
           </div>
         </div>
@@ -348,39 +458,49 @@
     </div>
   </section>
 
-  <section id="hackathons">
-    <h2 class="section-title">hackathons</h2>
-    <div class="card hack-feat">
-      <!-- TODO: replace placeholder with HackSpain photo, e.g. <div class="photo"><img src="media/hackspain-2026.jpg" alt="HackSpain 2026"></div> -->
-      <div class="photo-slot">[ HackSpain 2026 photo ]</div>
-      <div class="hack-feat-body">
-        <h3>🥇 HackSpain 2026 — Winner, Prosper AI Track</h3>
-        <div class="year">Madrid · Sept 18–20, 2026</div>
-        <p>Built an autonomous voice agent that runs a medical clinic's appointment system end to end. It handles messy real-world calls (background noise, interruptions, patients changing their minds mid-call, a secondary insurance mentioned only when asked) in 5 languages. It goes beyond answering: it detects which upcoming visits or follow-ups each patient needs and proactively calls them, adapting its personality to each caller. A companion dashboard gives the clinic real-time traceability, configuration and analytics.</p>
-        <p class="hack-meta"><em>Team of 5 · 48 hours · 77k lines of Python</em> · built with <a href="https://www.linkedin.com/in/cristina-caballero-rivas/" target="_blank" rel="noopener">Cristina</a>, <a href="https://www.linkedin.com/in/francisco-jimeno-fernandez/" target="_blank" rel="noopener">Francisco</a>, <a href="https://www.linkedin.com/in/ricardomendezcavalieri/" target="_blank" rel="noopener">Ricardo</a> &amp; <a href="https://www.linkedin.com/in/joaquin-ferreiros/" target="_blank" rel="noopener">Joaquin</a>.</p>
-        <p class="hack-meta"><strong>Stack:</strong> Pipecat real-time voice pipeline · Soniox STT · ElevenLabs multilingual TTS · LLM with automatic model fallback · FastAPI + WebSockets · Supabase/Postgres · Langfuse tracing &amp; evals · React + Vite dashboard · Docker</p>
+  <section id="education">
+    <h2 class="section-title">education</h2>
+  
+    <div class="card edu-entry">
+      <div class="edu-entry-main">
+  
+        <div class="edu-head">
+          <h4>Dual Degree in Data Science and Engineering + Telecommunication Technologies Engineering</h4>
+        </div>
+  
+        <div class="edu-meta">
+          Universidad Carlos III de Madrid ·
+          <span class="edu-date">2022 – Expected June 2027</span>
+        </div>
+  
+        <p>
+          Ranked <strong>1st in class</strong>, GPA <strong>9.82/10.00</strong>.
+          Highest Distinction (<em>Matrícula de Honor</em>, awarded to the top
+          student in the class) in 31 courses.
+        </p>
+  
+        <div class="edu-meta">
+          NTU Singapore ·
+          <span class="edu-date">Exchange Year, Electrical and Electronic Engineering</span>
+        </div>
+  
+        <p>
+          GPA <strong>5.00/5.00</strong>, highest distinction ('A+') in 11 of 12 courses.
+        </p>
+  
       </div>
-    </div>
-
-    <div class="card hack-feat">
-      <div class="photo"><img src="media/project-barcelona.jpg" alt="Project Barcelona Hackathon"></div>
-      <div class="hack-feat-body">
-        <h3>Project Barcelona Hackathon</h3>
-        <div class="year">Apr 2026 · Preply Track <span class="tag new">Winners</span></div>
-        <p>Assembled an NLP engine that converts raw class transcriptions into student progress analytics - measuring fluency, vocabulary growth, and grammar trends automatically.</p>
-        <p style="font-size:0.82rem; color:var(--muted); margin-top:0.3rem;">Built in 24 hours with Cristina & Hugo.</p>
-        <a class="demo" href="https://project-barcelona.hcenteno.com/" target="_blank" rel="noopener">watch the demo &rarr;</a>
+  
+      <div class="rugby-card">
+        <div class="rugby-photo">
+          <img src="media/rugby.jpg" alt="Playing rugby">
+          <span class="es-badge">#off-topic</span>
+        </div>
+  
+        <div class="rugby-caption">
+          <span class="p2">~</span>$ fav part of uni: rugby
+        </div>
       </div>
-    </div>
-
-    <div class="past-row">
-      <div class="past-label">Previously at</div>
-      <div class="past-items">
-        <div class="past-item"><img class="logo-img" src="media/easyA.png" alt="VeChain x EasyA hackathon logo"><div class="name">VeChain x EasyA x BCG Singapore Hackathon (2025)</div></div>
-        <div class="past-item"><img class="logo-img" src="media/ada-byron.jpg" alt="Ada Byron hackathon logo"><div class="name">Ada Byron (2024)</div></div>
-        <div class="past-item"><img class="logo-img" src="media/circular-innovation.jpg" alt="Circular Innovation Hackathon logo"><div class="name">Circular Innovation Hackathon (2023)</div></div>
-        <div class="past-item"><img class="logo-img" src="media/techfest.jpg" alt="T3chFest logo"><div class="name">T3chFest Hackathon (2022)</div></div>
-      </div>
+  
     </div>
   </section>
 
@@ -398,6 +518,30 @@
     function apply(t){ root.setAttribute('data-theme', t); btn.textContent = t==='dark' ? '[ light ]' : '[ dark ]'; }
     apply(theme);
     btn.addEventListener('click', function(){ theme = theme==='dark'?'light':'dark'; apply(theme); try{localStorage.setItem('theme',theme);}catch(e){} });
+  })();
+
+  (function(){
+    var btn=document.getElementById('cohort-btn'), panel=document.getElementById('cohort-info');
+    function set(open){ panel.hidden=!open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+    btn.addEventListener('click', function(){ set(panel.hidden); });
+    document.getElementById('cohort-close').addEventListener('click', function(){ set(false); btn.focus(); });
+    // pointerdown (not click) so outside taps also register on iOS Safari
+    document.addEventListener('pointerdown', function(e){
+      if(!panel.hidden && !panel.contains(e.target) && !btn.contains(e.target)) set(false);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key==='Escape' && !panel.hidden){ set(false); btn.focus(); }
+    });
+  })();
+
+  // highlighter draw-in when the highlighted text scrolls into view
+  (function(){
+    var marks = document.querySelectorAll('mark.hl');
+    if(!('IntersectionObserver' in window)){ marks.forEach(function(m){ m.classList.add('on'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { threshold:1 });
+    marks.forEach(function(m){ io.observe(m); });
   })();
 </script>
 </body>
