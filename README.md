@@ -6,7 +6,7 @@ Just a CV-like personal webpage, with some cool demos of past hackathons, my awa
 
 ## Stack
 
-There's actually no framework or build step. It's a single `index.html` with inline CSS and a bit of vanilla JavaScript, like the good old times when code was written by hand! (although of course, this WASN'T written by hand)
+There's actually no stack, what a relief these days. It's a single `index.html` with inline CSS and a bit of vanilla JavaScript, like the good old times when code was written by hand! (although of course, this WASN'T written by hand)
 
 ## Contact
 
