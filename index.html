@@ -111,7 +111,7 @@
   section{ margin-bottom:4.2rem; }
 
   /* currently building (full-width card at top of work experience) */
-  .build-card{ display:block; margin-bottom:1.4rem; }
+  .build-card{ display:flex; align-items:flex-start; margin-bottom:1.4rem; }
   .build-card h3{ margin:0; font-size:1.05rem; font-weight:700; display:flex; flex-wrap:wrap; align-items:center; gap:.4rem .7rem; color:var(--text); }
   .build-card p{ margin:.35rem 0 0; }
   .build-card p.hack-meta{ margin-top:.25rem; }
@@ -170,6 +170,7 @@
   }
   .exp-card.es-card .exp-body{ padding:1rem 1.2rem 1.3rem; }
   .exp-body{ flex:1; min-width:0; }
+  .exp-logo{ width:52px; height:52px; flex-shrink:0; display:block; object-fit:cover; border:1px solid var(--line); border-radius:8px; background:var(--bg-alt); }
   .exp-card h3{ font-size:1.05rem; margin:0 0 .1rem; font-weight:700; }
   .exp-card .org{ color:var(--accent2); font-size:.85rem; }
   .exp-card p{ font-size:.87rem; margin:.5rem 0 0; }
@@ -356,7 +357,7 @@
       <div class="hack-feat-body">
         <h3>HackSpain 2026 (Madrid)</h3>
         <div class="year">Sept 2026 · Prosper AI Track <span class="tag win">🏆 Winners</span></div>
-        <p>Built an autonomous voice agent that runs a medical clinic's appointments. It handles messy real-world calls (noise, interruptions, patients changing their minds) and proactively calls patients due for visits.</p>
+        <p>Built an autonomous <strong>voice agent</strong> that runs a medical clinic's appointments. It handles messy real-world calls (noise, interruptions, patients changing their minds) and proactively calls patients due for visits.</p>
         <p class="hack-meta"><em>Built in 48 hours</em> with <a href="https://www.linkedin.com/in/cristina-caballero-rivas/" target="_blank" rel="noopener">Cristina</a>, <a href="https://www.linkedin.com/in/francisco-jimeno-fernandez/" target="_blank" rel="noopener">Fran</a>, <a href="https://www.linkedin.com/in/ricardomendezcavalieri/" target="_blank" rel="noopener">Ric</a> &amp; <a href="https://www.linkedin.com/in/joaquin-ferreiros/" target="_blank" rel="noopener">Joaquin</a>.</p>
       </div>
       <div class="demo-col">
@@ -375,7 +376,7 @@
       <div class="hack-feat-body">
         <h3>Project Europe 2026 (Barcelona)</h3>
         <div class="year">Apr 2026 · Preply Track <span class="tag win">🏆 Winners</span></div>
-        <p>Assembled an NLP engine that converts raw class transcriptions into student progress analytics - measuring fluency, vocabulary growth, and grammar trends automatically.</p>
+        <p>Assembled an <strong>NLP engine</strong> that converts raw class transcriptions into student progress analytics - measuring fluency, vocabulary growth, and grammar trends automatically.</p>
         <p class="hack-meta"><em>Built in 24 hours</em> with <a href="https://www.linkedin.com/in/cristina-caballero-rivas/" target="_blank" rel="noopener">Cristina</a> &amp; Hugo.</p>
       </div>
       <div class="demo-col">
@@ -407,13 +408,17 @@
   <section id="experience">
     <h2 class="section-title">work_experience</h2>
     <div class="card announce build-card" id="building">
-      <h3>Next Hop <span class="tag current">currently building</span></h3>
-      <p class="announce-text">A platform that plans your trips using fresh, verified data to create personalized, hour-by-hour schedules.</p>
-      <p class="hack-meta">Co-founder · In private alpha, public beta early 2027.</p>
+      <img class="exp-logo" src="media/app-icon-navy.svg" alt="Next Hop logo">
+      <div class="announce-text">
+        <h3>Next Hop <span class="tag current">currently building</span></h3>
+        <p>A platform that plans your trips using fresh, verified data to create personalized, hour-by-hour schedules.</p>
+        <p class="hack-meta">Co-founder · In private alpha, public beta early 2027.</p>
+      </div>
     </div>
     <div class="experience-grid">
       <div class="experience-main">
         <div class="card exp-card">
+          <img class="exp-logo" src="media/mckinsey_logo.jpeg" alt="McKinsey &amp; Company logo">
           <div class="exp-body">
             <h3>McKinsey &amp; Company — QuantumBlack, AI by McKinsey</h3>
             <div class="org">Data Scientist Intern</div>
@@ -422,17 +427,18 @@
           </div>
         </div>
         <div class="card exp-card imdea">
+          <img class="exp-logo" src="media/imdea_networks_logo.jpeg" alt="IMDEA Networks Institute logo">
           <div class="exp-body">
             <h3>IMDEA Networks Institute</h3>
             <div class="role-line current">
               <span class="dot"></span>
               <div><h4>Mobile Networks AI Researcher <span class="tag current">current</span></h4><div class="when">Sept 2025 – Present</div>
-              <p>Developing reinforcement-learning environments to train agents for 5G RAN virtualization and resource management.</p></div>
+              <p>Researching hierarchical multi-agent RL for scheduling 5G vRAN tasks.</p></div>
             </div>
             <div class="role-line">
               <span class="dot"></span>
               <div><h4>Quantum Communications Student Researcher</h4><div class="when">Jun–Jul 2024</div>
-              <p>Investigated quantum computing to accelerate error correction in mobile networks.</p>
+              <p>Investigated quantum computing for error correction in mobile networks.</p>
               <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3727128" target="_blank" rel="noopener">second author of "Quantum Computing in the RAN with Qu4Fec" — ACM SIGMETRICS 2025</a></div>
             </div>
           </div>
